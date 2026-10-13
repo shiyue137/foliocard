@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="把目录结构变成精致的卡片。原生、离线、无上传，使用 Catppuccin 图标。">
+  <title>Foliocard — 给项目结构一个好看的位置</title>
+  <link rel="icon" type="image/png" href="assets/brand/foliocard-icon.png">
+  <script defer src="assets/brand/icon.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="assets/catppuccin/icons.js"></script>
+  <script defer src="i18n.js"></script>
+  <script defer src="tree.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="./" aria-label="Foliocard 首页"><img class="brand-mark" src="assets/brand/foliocard-icon.png" alt="">Foliocard</a>
+    <div class="header-note"><span class="status-dot"></span> 本地渲染 · 无需上传</div>
+    <div class="appearance-controls">
+      <label class="sr-only" for="appearance">页面外观</label>
+      <select id="appearance"><option value="light">亮色</option><option value="dark">暗色</option><option value="system">跟随系统</option></select>
+      <label class="sr-only" for="language">界面语言</label>
+      <select id="language"><option value="zh-CN">简体中文</option><option value="en">English</option></select>
+    </div>
+    <a class="text-link" href="https://github.com/catppuccin/vscode-icons" target="_blank" rel="noreferrer">Icons by Catppuccin <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="workspace">
+    <aside class="editor-panel" aria-label="内容与样式编辑器">
+      <div class="panel-intro"><div class="eyebrow">A LITTLE STRUCTURE. A LOT OF CLARITY.</div><h1>让结构，<br>一目了然<span>。</span></h1><p>粘贴目录树，做一张恰到好处的卡片。</p></div>
+      <div class="editor-body">
+        <section class="source-section">
+          <div class="section-heading"><h2><span class="section-number">01</span>目录内容</h2><button id="sample" class="text-button" type="button">载入示例 ↺</button></div>
+          <label class="sr-only" for="source">目录树文本</label>
+          <textarea id="source" spellcheck="false" aria-describedby="source-help" placeholder="my-project/&#10;├── src/  # 源代码&#10;└── README.md"></textarea>
+          <div class="editor-caption" id="source-help"><span>树形文本 / 缩进文本</span><span><code> # </code> 添加注释</span></div>
+          <details class="github-details"><summary>从 GitHub 导入 <span>公开仓库 ↗</span></summary><form id="github-form"><label for="repo-url">仓库地址</label><div class="input-action"><input id="repo-url" type="url" placeholder="https://github.com/owner/repo" required><button type="submit" id="import-repo">导入</button></div><p class="help">读取默认分支，最多显示 500 个条目。导入会访问 GitHub API。</p></form></details>
+        </section>
+        <section>
+          <div class="section-heading"><h2><span class="section-number">02</span>卡片风格</h2><span class="muted">挑一种气质</span></div>
+          <div class="theme-grid" role="group" aria-label="主题">
+            <button class="theme-option selected" data-theme="mocha" aria-pressed="true"><span class="theme-sample sample-mocha"><i></i><i></i><i></i></span><span>Mocha<small>柔和暗色</small></span><b>✓</b></button>
+            <button class="theme-option" data-theme="paper" aria-pressed="false"><span class="theme-sample sample-paper"><i></i><i></i><i></i></span><span>Paper<small>轻盈文档</small></span><b>✓</b></button>
+            <button class="theme-option" data-theme="dusk" aria-pressed="false"><span class="theme-sample sample-dusk"><i></i><i></i><i></i></span><span>Dusk<small>暮色渐变</small></span><b>✓</b></button>
+          </div>
+          <label class="field-label" for="title">窗口标题</label><input id="title" value="LoomStudio" maxlength="80">
+          <div class="two-columns"><div><label class="field-label" for="font-size">字号 <output id="font-value">15</output></label><input id="font-size" type="range" min="12" max="20" value="15"></div><div><label class="field-label" for="padding">留白 <output id="padding-value">48</output></label><input id="padding" type="range" min="16" max="80" step="8" value="48"></div></div>
+          <div class="two-columns"><div><label class="field-label" for="depth">显示层级</label><select id="depth"><option value="0">全部展开</option><option value="1">根目录</option><option value="2">2 层</option><option value="3">3 层</option><option value="4">4 层</option></select></div><div><label class="field-label" for="icon-color">图标颜色</label><select id="icon-color"><option value="original">Catppuccin 原色</option><option value="mono">统一单色</option><option value="accent">主题强调色</option></select></div></div>
+          <div class="switch-list"><label><span>显示说明<small>保留每个目录的用途</small></span><input id="comments" type="checkbox" role="switch" checked></label><label><span>窗口装饰<small>顶部的三个小圆点</small></span><input id="chrome" type="checkbox" role="switch" checked></label><label><span>品牌水印<small>在窗口右上角显示 Foliocard 图标</small></span><input id="watermark" type="checkbox" role="switch"></label><label><span>透明背景<small>只保留卡片本身</small></span><input id="transparent" type="checkbox" role="switch"></label></div>
+          <div class="section-heading composition-heading"><h2><span class="section-number">03</span>画布与构图</h2></div>
+          <div class="canvas-target" role="group" aria-label="画布拖动对象"><button id="edit-card" type="button" aria-pressed="true">移动卡片</button><button id="edit-background" type="button" aria-pressed="false" disabled aria-describedby="background-mode-help">移动背景</button></div>
+          <p id="background-mode-help" class="help">上传背景图片后，可切换移动对象。</p>
+          <label class="field-label" for="canvas-mode">画布大小</label><select id="canvas-mode"><option value="auto">自动适应内容</option><option value="custom" selected>自定义尺寸</option></select>
+          <div class="two-columns" id="canvas-dimensions"><div><label class="field-label" for="canvas-width">宽度</label><input id="canvas-width" type="number" min="320" max="4096" step="1" value="1200"></div><div><label class="field-label" for="canvas-height">高度</label><input id="canvas-height" type="number" min="320" max="4096" step="1" value="630"></div></div>
+          <div class="two-columns"><div><label class="field-label" for="position-x">水平位置 <output id="position-x-value">50%</output></label><input id="position-x" type="range" min="0" max="100" value="50"></div><div><label class="field-label" for="position-y">垂直位置 <output id="position-y-value">50%</output></label><input id="position-y" type="range" min="0" max="100" value="50"></div></div>
+          <div class="two-columns"><div><label class="field-label" for="card-width">卡片宽度</label><input id="card-width" type="number" min="0" max="2400" step="1" value="0"></div><div><label class="field-label" for="card-height">卡片高度</label><input id="card-height" type="number" min="0" max="4000" step="1" value="0"></div></div>
+          <p class="help">尺寸填 0 自动适应内容；拖动卡片移动，拖角缩放，拖边调整宽高。</p>
+          <label class="field-label" for="card-zoom">卡片缩放 <output id="card-zoom-value">100%</output></label><input id="card-zoom" type="range" min="20" max="150" value="100">
+          <div class="two-columns"><div><label class="field-label" for="glass-blur">毛玻璃模糊 <output id="glass-blur-value">18</output></label><input id="glass-blur" type="range" min="0" max="40" value="18"></div><div><label class="field-label" for="card-opacity">卡片不透明度 <output id="card-opacity-value">88%</output></label><input id="card-opacity" type="range" min="10" max="100" value="88"></div></div>
+          <label class="field-label" for="background-file">自定义背景 <button type="button" class="text-button" id="clear-background" hidden>移除</button></label><label class="upload-label" for="background-file">＋ 选择一张图片 <span>PNG / JPG / WebP</span></label><input id="background-file" class="sr-only" type="file" accept="image/png,image/jpeg,image/webp">
+          <div id="background-controls" hidden>
+            <p class="help">开启后在画布上拖动背景；先放大可获得更多移动空间。</p>
+            <div class="two-columns"><div><label class="field-label" for="background-x">背景水平位置 <output id="background-x-value">50%</output></label><input id="background-x" type="range" min="0" max="100" value="50"></div><div><label class="field-label" for="background-y">背景垂直位置 <output id="background-y-value">50%</output></label><input id="background-y" type="range" min="0" max="100" value="50"></div></div>
+            <label class="field-label" for="background-zoom">背景缩放 <output id="background-zoom-value">100%</output></label><input id="background-zoom" type="range" min="100" max="300" value="100">
+          </div>
+        </section>
+      </div>
+      <footer class="panel-footer"><span>一个小工具，让文档多一点用心。</span><span>v0.1</span></footer>
+    </aside>
+    <section class="preview-panel" aria-label="卡片预览">
+      <div class="preview-toolbar"><div><span class="live-dot"></span><strong>画布预览</strong><span class="preview-hint">每一处调整，即时呈现</span></div><div class="preview-actions"><label class="sr-only" for="zoom">预览缩放</label><select id="zoom"><option value="fit">适应画布</option><option value="0.5">50%</option><option value="0.75">75%</option><option value="1">100%</option></select><button type="button" id="save-source" class="quiet-button" title="保存文本和样式，下次继续编辑">保存作品</button><button type="button" id="load-source" class="quiet-button">打开作品</button><input id="project-file" aria-label="打开作品" class="sr-only" type="file" accept=".json,application/json"></div></div>
+      <div id="message" class="message" role="status" aria-live="polite" hidden></div>
+      <div class="canvas-area" id="canvas-area"><div class="canvas-wrap"><div id="preview" class="preview"></div><div id="card-frame" class="card-frame" aria-label="拖动卡片" tabindex="0"><span class="card-grip">⠿</span><button class="resize-handle corner" data-handle="scale" aria-label="缩放卡片"></button><button class="resize-handle edge-right" data-handle="width" aria-label="调整卡片宽度"></button><button class="resize-handle edge-bottom" data-handle="height" aria-label="调整卡片高度"></button></div><div class="canvas-caption"><span id="tree-stats"></span><span class="caption-divider">/</span><span id="dimensions"></span><span class="caption-divider">/</span><span>CATPPUCCIN ICONS</span></div></div></div>
+      <div class="export-bar"><div><strong>准备好，放进你的 README。</strong><p>图标已内嵌，导出后不依赖外部资源。</p></div><div class="export-actions"><button type="button" class="secondary-button" id="export-svg">SVG <span>↗</span></button><button type="button" class="primary-button" id="export-png">导出 PNG <span>↓</span><small>2×</small></button></div></div>
+    </section>
+  </main>
+</body>
+</html>
