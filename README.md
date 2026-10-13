@@ -77,7 +77,11 @@ Dusk 使用渐变背景。自定义背景支持卡片区域的高斯模糊与透
 
 ## 品牌与发布
 
-仓库：[shiyue137/foliocard](https://github.com/shiyue137/foliocard)。纯静态站点，资源使用相对路径，可部署到 GitHub Pages 仓库子路径；已添加 `.nojekyll`。GitHub Pages 尚未启用。
+仓库：[shiyue137/foliocard](https://github.com/shiyue137/foliocard)。纯静态站点，资源使用相对路径，可部署到 GitHub Pages 仓库子路径；已添加 `.nojekyll`。GitHub Pages 使用 `main` 分支根目录发布，推送后自动更新。
+
+在线使用：https://shiyue137.github.io/foliocard/
+
+部署设置：仓库 **Settings → Pages → Build and deployment**，Source 选择 **Deploy from a branch**，Branch 选择 **main**，目录选择 **/ (root)**。本站无构建步骤，无需额外 Actions 工作流。
 
 注释紧跟文件名，空间不足才换行；卡片不再含底部统计栏。品牌水印默认关闭，可在窗口 Header 右侧显示，PNG / SVG 均内嵌图标，作品保存包含开关。
 
